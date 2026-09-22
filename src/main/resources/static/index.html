@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OpenChat AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-top">
+
+                <div class="brand">
+                    <div class="brand-icon">O</div>
+                    <span>OpenChat AI</span>
+                </div>
+
+                <button class="new-chat-btn" onclick="newChat()">
+                    <span>＋</span>
+                    New chat
+                </button>
+
+            </div>
+
+
+            <div class="history">
+
+                <div class="history-title">
+                    Today
+                </div>
+
+                <div class="history-item">
+                    <span>💬</span>
+                    Java Spring Boot
+                </div>
+
+                <div class="history-item">
+                    <span>💬</span>
+                    What is REST API?
+                </div>
+
+                <div class="history-item">
+                    <span>💬</span>
+                    Learn Java
+                </div>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <button class="sidebar-option">
+                    ⚙️
+                    Settings
+                </button>
+
+                <button class="sidebar-option" onclick="logout()">
+                    ↪
+                    Log out
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN -->
+        <main class="main">
+
+            <!-- TOP BAR -->
+            <header class="topbar">
+
+                <button
+                    class="mobile-menu"
+                    onclick="toggleSidebar()">
+                    ☰
+                </button>
+
+                <div class="model-name">
+                    OpenChat AI
+                    <span>⌄</span>
+                </div>
+
+            </header>
+
+
+            <!-- CHAT -->
+            <section class="chat-area" id="chatArea">
+
+                <div class="welcome" id="welcome">
+
+                    <div class="welcome-logo">
+                        O
+                    </div>
+
+                    <h1>
+                        How can I help you today?
+                    </h1>
+
+                    <div class="suggestions">
+
+                        <button onclick="useSuggestion('Explain Java in simple words')">
+                            <strong>💡 Explain Java</strong>
+                            <span>in simple words</span>
+                        </button>
+
+                        <button onclick="useSuggestion('What is a REST API?')">
+                            <strong>🔧 REST API</strong>
+                            <span>Explain with an example</span>
+                        </button>
+
+                        <button onclick="useSuggestion('Help me learn Spring Boot')">
+                            <strong>📚 Learn Spring Boot</strong>
+                            <span>Create a learning plan</span>
+                        </button>
+
+                        <button onclick="useSuggestion('Write a Java program')">
+                            <strong>💻 Write code</strong>
+                            <span>Help me with Java</span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- INPUT -->
+            <div class="input-section">
+
+                <div class="input-wrapper">
+
+                    <textarea
+                        id="messageInput"
+                        placeholder="Message OpenChat AI..."
+                        rows="1"></textarea>
+
+                    <button
+                        class="send-btn"
+                        id="sendButton"
+                        onclick="sendMessage()">
+
+                        ↑
+
+                    </button>
+
+                </div>
+
+                <div class="input-info">
+                    OpenChat AI may make mistakes. Check important information.
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/chat.js"></script>
+
+</body>
+
+</html>
