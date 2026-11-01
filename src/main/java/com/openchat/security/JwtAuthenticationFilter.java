@@ -31,32 +31,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain)
             throws ServletException, IOException {
 
-        // Read Authorization header
         String authHeader = request.getHeader("Authorization");
 
-        // Check whether token exists
+        // If token is missing, continue the filter chain.
+        // SecurityConfig decides whether authentication is required.
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 
             filterChain.doFilter(request, response);
             return;
         }
 
-        // Extract token
         String token = authHeader.substring(7);
 
         try {
 
-            // Extract email from token
             String email = jwtService.extractUsername(token);
 
-            // Check whether user is already authenticated
-            if (email != null
-                    && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (email != null &&
+                    SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                // Validate token
                 if (jwtService.isTokenValid(token, email)) {
 
-                    // Create authentication object
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
                                     email,
@@ -64,7 +59,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     List.of()
                             );
 
-                    // Store authentication in SecurityContext
                     SecurityContextHolder.getContext()
                             .setAuthentication(authentication);
                 }
@@ -72,11 +66,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         } catch (JwtException | IllegalArgumentException e) {
 
-            // Clear authentication for invalid tokens
             SecurityContextHolder.clearContext();
         }
 
-        // Continue filter chain
         filterChain.doFilter(request, response);
     }
 }

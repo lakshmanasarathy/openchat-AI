@@ -1,6 +1,6 @@
 package com.openchat.service;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.openchat.dto.RegisterRequest;
@@ -11,14 +11,17 @@ import com.openchat.repository.UserRepository;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    private final BCryptPasswordEncoder passwordEncoder =
-            new BCryptPasswordEncoder();
+    public UserService(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder) {
 
-    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
+    // Register User
     public String registerUser(RegisterRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -29,12 +32,25 @@ public class UserService {
 
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
+
+        // Encrypt password
         user.setPassword(
                 passwordEncoder.encode(request.getPassword())
         );
 
+        user.setRole("USER");
+
         userRepository.save(user);
 
         return "User registered successfully!";
+    }
+
+    // Get User by Email
+    public User getUserByEmail(String email) {
+
+        return userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found")
+                );
     }
 }
