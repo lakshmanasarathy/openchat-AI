@@ -10,7 +10,7 @@ import com.openchat.service.AuthService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/users")
 @CrossOrigin(origins = "*")
 public class AuthController {
 

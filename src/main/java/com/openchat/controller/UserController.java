@@ -27,4 +27,16 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
+    
+    @GetMapping("/profile")
+    public ResponseEntity<?> getProfile(
+            org.springframework.security.core.Authentication authentication) {
+
+        String email = authentication.getName();
+
+        return ResponseEntity.ok(
+                userService.getUserByEmail(email)
+        );
+    }
+    
 }
